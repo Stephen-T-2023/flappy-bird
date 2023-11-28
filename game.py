@@ -13,13 +13,15 @@ from pygame.locals import (
 SCREEN_WIDTH = 1920
 SCREEN_HEIGHT = 1080
 
+rand = -200
+
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super(Player, self).__init__()
         self.surf = pygame.Surface((75, 25))
         self.surf.fill((255, 212, 92))
         self.rect = self.surf.get_rect(
-            center = (960, 540  )
+            center = (960, 540)
         )
     
     def update(self, pressed_keys):
@@ -37,13 +39,13 @@ class Player(pygame.sprite.Sprite):
         if self.rect.bottom >= SCREEN_HEIGHT:
             self.rect.bottom = SCREEN_HEIGHT
 
-class bottom_pipe(pygame.sprite.Sprite):
+class top_pipe(pygame.sprite.Sprite):
     def __init__(self):
-        super(bottom_pipe, self).__init__()
-        self.surf = pygame.Surface((200, 550))
+        super(top_pipe, self).__init__()
+        self.surf = pygame.Surface((200, 1080))
         self.surf.fill((255, 255, 255))
         self.rect = self.surf.get_rect(
-            center = (2000, 1000)
+            center = (2000, rand)
         )
         self.speed = 2
 
@@ -52,15 +54,14 @@ class bottom_pipe(pygame.sprite.Sprite):
         if self.rect.right < 0:
             self.kill()
 
-class top_pipe(pygame.sprite.Sprite):
+class bottom_pipe(pygame.sprite.Sprite):
     def __init__(self):
-        rand = random.randint(0,1)
-        centering = [(2000, 1000),(2000, 20)]
-        super(top_pipe, self).__init__()
-        self.surf = pygame.Surface((200, 550))
+        new = rand + 1400
+        super(bottom_pipe, self).__init__()
+        self.surf = pygame.Surface((200, 1080))
         self.surf.fill((255, 255, 255))
         self.rect = self.surf.get_rect(
-            center = (2000, 20)
+            center = (2000, new)
         )
         self.speed = 2
 
@@ -98,6 +99,7 @@ while running:
             enemies.add(new_bottom_pipe)
             all_sprites.add(new_top_pipe)
             all_sprites.add(new_bottom_pipe)
+            rand = random.randint(-400, 100) 
 
     pressed_keys = pygame.key.get_pressed()
 
